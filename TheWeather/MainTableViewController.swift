@@ -32,9 +32,11 @@ class MainTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
     }
 
-
-
     // MARK: - Table view data source
+
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
 
@@ -46,13 +48,13 @@ class MainTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? UITableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? WeatherTableViewCell else {
             fatalError("Dequeueing UITableViewCell failed")
         }
 
         let data = viewModel.getCellViewModel(at: indexPath)
 
-        cell.textLabel?.text = data?.cityText
+        cell.weather = data
         return cell
     }
 
