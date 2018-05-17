@@ -11,13 +11,28 @@ import UIKit
 class MainTableViewController: UITableViewController {
     private let reuseIdentifier = "CellId"
 
+    lazy var viewModel: MainViewModel = {
+        return MainViewModel()
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        viewModel.initFetch()
+
+        viewModel.reloadTableViewClosure = { [weak self] in
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
+
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+
+
 
     // MARK: - Table view data source
 
@@ -27,7 +42,7 @@ class MainTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return viewModel.numberOfCells
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -35,7 +50,9 @@ class MainTableViewController: UITableViewController {
             fatalError("Dequeueing UITableViewCell failed")
         }
 
-        cell.textLabel?.text = "cell"
+        let data = viewModel.getCellViewModel(at: indexPath)
+
+        cell.textLabel?.text = data?.cityText
         return cell
     }
 
