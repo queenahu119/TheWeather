@@ -18,6 +18,8 @@ class MainTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationItem.title = "Current Weather"
+
         viewModel.initFetch()
 
         viewModel.reloadTableViewClosure = { [weak self] in
@@ -58,4 +60,8 @@ class MainTableViewController: UITableViewController {
         return cell
     }
 
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "ShowDetailView", sender: nil)
+    }
 }
