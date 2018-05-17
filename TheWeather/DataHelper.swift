@@ -8,14 +8,17 @@
 
 import Foundation
 
+let serverURL = "https://api.openweathermap.org/data/2.5/weather"
+
 class DataHelper: NSObject {
 
     func loadDataByCity(name: String, callback: @escaping (WeatherData?, NSError?) -> ()) {
 
-        var components = URLComponents(string: WeatherClient.Server)!
+        var components = URLComponents(string: serverURL)!
         components.queryItems = [
             URLQueryItem(name: "id", value: name),
-            URLQueryItem(name: "APPID", value: WeatherClient.AppID)
+            URLQueryItem(name: "APPID", value: WeatherClient.AppID),
+            URLQueryItem(name: "units", value: "metric")
         ]
 
         components.percentEncodedQuery = components.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
