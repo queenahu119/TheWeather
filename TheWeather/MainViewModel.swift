@@ -16,7 +16,7 @@ class MainViewModel: NSObject {
         self.dataHelper = dataHelper
     }
 
-    var citys = ["2147714", "4163971", "2174003"]
+    var citys = ["2147714", "7839805", "2174003"]
 
     // MARK: - callback
     var reloadTableViewClosure: (() -> Void)?
@@ -29,13 +29,13 @@ class MainViewModel: NSObject {
         return cellViewModels.count
     }
 
-    private var cellViewModels: [CityCellViewModel] = [CityCellViewModel]() {
+    private var cellViewModels: [WeatherCellViewModel] = [WeatherCellViewModel]() {
         didSet {
             self.reloadTableViewClosure?()
         }
     }
 
-    func getCellViewModel( at indexPath: IndexPath) -> CityCellViewModel? {
+    func getCellViewModel( at indexPath: IndexPath) -> WeatherCellViewModel? {
         return cellViewModels[indexPath.row]
     }
 
@@ -49,14 +49,14 @@ class MainViewModel: NSObject {
                     return
                 }
 
-                let cell = CityCellViewModel(cityText: weatherData.name, temperatureText: weatherData.main?.temp)
+                let cell = WeatherCellViewModel(cityText: weatherData.name, temperatureText: weatherData.main?.temp)
                 self?.cellViewModels.append(cell)
             }
         }
     }
 }
 
-struct CityCellViewModel {
+struct WeatherCellViewModel {
     let cityText: String?
     let temperatureText: Double?
 }
