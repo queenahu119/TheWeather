@@ -39,6 +39,12 @@ class MainViewModel: NSObject {
         return cellViewModels[indexPath.row]
     }
 
+    private var weathers = [WeatherData]()
+
+    func getAllWeatherInfo( at indexPath: IndexPath) -> WeatherData? {
+        return weathers[indexPath.row]
+    }
+
     // MARK: - Logic
 
     fileprivate func fetchData() {
@@ -51,6 +57,8 @@ class MainViewModel: NSObject {
 
                 let cell = WeatherCellViewModel(cityText: weatherData.name, temperatureText: weatherData.main?.temp)
                 self?.cellViewModels.append(cell)
+
+                self?.weathers.append(weatherData)
             }
         }
     }

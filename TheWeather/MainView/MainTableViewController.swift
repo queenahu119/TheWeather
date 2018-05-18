@@ -51,7 +51,7 @@ class MainTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? WeatherTableViewCell else {
-            fatalError("Dequeueing UITableViewCell failed")
+            fatalError("Dequeueing WeatherTableViewCell failed")
         }
 
         let data = viewModel.getCellViewModel(at: indexPath)
@@ -60,8 +60,19 @@ class MainTableViewController: UITableViewController {
         return cell
     }
 
-
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "ShowDetailView", sender: nil)
+
+        performSegue(withIdentifier: "ShowDetailView", sender:self)
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let viewController: DetailViewController = segue.destination as? DetailViewController {
+
+            viewController.viewModel = viewModel
+
+            if let indexPath = self.tableView.indexPathForSelectedRow {
+                viewController.indexPath = indexPath
+            }
+        }
     }
 }

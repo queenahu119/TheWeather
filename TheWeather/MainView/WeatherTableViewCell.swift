@@ -17,18 +17,18 @@ class WeatherTableViewCell: UITableViewCell {
             cityLabel.text = weather?.cityText
 
             if let temperature = weather?.temperatureText {
-                let attribute = [ NSAttributedStringKey.foregroundColor: UIColor.red,
-                                  NSAttributedStringKey.font: UIFont.systemFont(ofSize: 28)]
                 let formatString = temperature.format(".1")
-                let attrString = NSMutableAttributedString(string: "$\(formatString) ", attributes: attribute)
-
-                temperatureLabel.attributedText = attrString
+                temperatureLabel.text = "\(formatString) ℃"
             }
         }
     }
 
     override func awakeFromNib() {
         super.awakeFromNib()
+
+        cityLabel.font = UIFont.systemFont(ofSize: 20)
+        temperatureLabel.font = UIFont.systemFont(ofSize: 28)
+        temperatureLabel.textAlignment = .right
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
