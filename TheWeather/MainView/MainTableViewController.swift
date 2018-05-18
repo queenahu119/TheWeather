@@ -15,18 +15,20 @@ class MainTableViewController: UITableViewController {
         return MainViewModel()
     }()
 
+    var activityIndicator:UIActivityIndicatorView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         navigationItem.title = "Current Weather"
 
+        setupLoading()
         viewModel.initFetch()
 
         viewModel.reloadTableViewClosure = { [weak self] in
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
             }
-
         }
     }
 
@@ -72,6 +74,32 @@ class MainTableViewController: UITableViewController {
 
             if let indexPath = self.tableView.indexPathForSelectedRow {
                 viewController.indexPath = indexPath
+            }
+        }
+    }
+
+    func setupLoading() {
+        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle:
+            UIActivityIndicatorViewStyle.gray)
+        activityIndicator.center = self.view.center
+        self.view.addSubview(activityIndicator)
+
+        viewModel.updateLoadingStatus = { [weak self] () in
+            DispatchQueue.main.async {
+                let isLoading = self?.viewModel.isLoading ?? false
+                if isLoading {
+                    self?.activityIndicator.startAnimating()
+
+                    UIView.animate(withDuration: 0.5, animations: {
+                        self?.view.alpha = 0.8
+                    })
+                } else {
+                    self?.activityIndicator.stopAnimating()
+
+                    UIView.animate(withDuration: 0.5, animations: {
+                        self?.view.alpha = 1
+                    })
+                }
             }
         }
     }
