@@ -8,6 +8,8 @@
 
 import UIKit
 
+let weatherIconUrl = "https://openweathermap.org/img/w/"
+
 class DetailViewController: UIViewController {
 
     var cityName: String?
@@ -50,11 +52,19 @@ class DetailViewController: UIViewController {
             maxMinTempLabel.text = "\(Int(main.tempMin ?? 0)) ℃ | \(Int(main.tempMax ?? 0)) ℃"
         }
 
-        if let weather = detailWeather?.weather.first,
-            let description = weather?.description {
-            descriptionLabel.text = description
-        } else {
-            descriptionLabel.text = "None"
+        if let weather = detailWeather?.weather.first {
+
+            if let description = weather?.description {
+                descriptionLabel.text = description
+            } else {
+                descriptionLabel.text = "None"
+            }
+
+            if let icon = weather?.icon {
+                let imageUrl = weatherIconUrl + icon + ".png"
+
+                weatherImageView.imageFromServerURL(urlString: imageUrl)
+            }
         }
 
         cityLabel.font = UIFont.systemFont(ofSize: 20)

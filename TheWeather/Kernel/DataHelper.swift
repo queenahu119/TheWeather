@@ -12,6 +12,8 @@ let serverURL = "https://api.openweathermap.org/data/2.5/weather"
 
 class DataHelper: NSObject {
 
+    fileprivate var weatherIcons: Dictionary<String, Any>?
+
     func loadDataByCity(name: String, callback: @escaping (WeatherData?, NSError?) -> ()) {
 
         var components = URLComponents(string: serverURL)!
