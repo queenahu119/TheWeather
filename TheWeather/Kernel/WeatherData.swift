@@ -26,28 +26,28 @@ struct WeatherData: Decodable {
 }
 
 struct Coordinate: Decodable {
-    var lon: Double
-    var lat: Double
+    var lon: Double?
+    var lat: Double?
 }
 
 struct WeatherInfo: Decodable {
-    var id: Int
-    var main: String
-    var description: String
-    var icon: String
+    var id: Int?
+    var main: String?
+    var description: String?
+    var icon: String?
 }
 
 struct MainInfo: Decodable {
-    var temp: Double
-    var pressure: Int
-    var humidity: Int
-    var tempMin: Double
-    var tempMax: Double
+    var temp: Double?
+    var pressure: Int?
+    var humidity: Int?
+    var tempMin: Double?
+    var tempMax: Double?
 }
 
 struct WindInfo: Decodable {
-    var speed: Double
-    var degrees: Int
+    var speed: Double?
+    var degrees: Double?
 
     private enum CodingKeys: String, CodingKey {
         case speed
@@ -56,11 +56,11 @@ struct WindInfo: Decodable {
 }
 
 struct CloudInfo: Decodable {
-    var all: Int
+    var all: Int?
 }
 
 struct VolumeInfo: Decodable {
-    var volume: Int // for the last 3 hours
+    var volume: Int? // for the last 3 hours
 
     private enum CodingKeys: String, CodingKey {
         case volume = "3h"
@@ -68,10 +68,10 @@ struct VolumeInfo: Decodable {
 }
 
 struct SystemInfo: Decodable {
-    var type: Int
-    var id: Int
-    var message: Double
-    var country: String
-    var sunrise: Int
-    var sunset: Int
+    var type: Int?
+    var id: Int?
+    var message: Double?
+    var country: String?
+    var sunrise: Int?
+    var sunset: Int?
 }
