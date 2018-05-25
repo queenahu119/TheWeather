@@ -64,18 +64,14 @@ class MainTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        performSegue(withIdentifier: "ShowDetailView", sender:self)
-    }
+        let storybard = UIStoryboard(name: "Main", bundle: nil)
+        if let detailVC = storybard.instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController {
+            detailVC.viewModel = viewModel
+            detailVC.indexPath = indexPath
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let viewController: DetailViewController = segue.destination as? DetailViewController {
-
-            viewController.viewModel = viewModel
-
-            if let indexPath = self.tableView.indexPathForSelectedRow {
-                viewController.indexPath = indexPath
-            }
+            navigationController?.pushViewController(detailVC, animated: true)
         }
+
     }
 
     func setupLoading() {
@@ -103,4 +99,5 @@ class MainTableViewController: UITableViewController {
             }
         }
     }
+
 }

@@ -44,6 +44,10 @@ class DetailViewController: UIViewController {
             detailWeather = data
         }
 
+        view.backgroundColor = UIColor.cyan
+        mainView.backgroundColor = UIColor.cyan
+        detailView.backgroundColor = UIColor.cyan
+        
         setupUI()
         setupDetailViewUI()
 

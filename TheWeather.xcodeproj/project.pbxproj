@@ -19,6 +19,8 @@
 		9B3B75BE20ADB54700993E0C /* WeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3B75BD20ADB54700993E0C /* WeatherTableViewCell.swift */; };
 		9B3B75C020ADB7FE00993E0C /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3B75BF20ADB7FE00993E0C /* Extension.swift */; };
 		9B3B75C520ADCB3F00993E0C /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3B75C420ADCB3F00993E0C /* DetailViewController.swift */; };
+		9B6F488E20B449CB00D69F9C /* FadeAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6F488D20B449CB00D69F9C /* FadeAnimationController.swift */; };
+		9B85F1C320B68AA4002B0499 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B85F1C220B68AA4002B0499 /* CustomNavigationController.swift */; };
 		CE2AD7001A89002E174CA947 /* Pods_TheWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F0350E274167AD5E0FAC6F /* Pods_TheWeather.framework */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +41,8 @@
 		9B3B75BD20ADB54700993E0C /* WeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTableViewCell.swift; sourceTree = "<group>"; };
 		9B3B75BF20ADB7FE00993E0C /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		9B3B75C420ADCB3F00993E0C /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		9B6F488D20B449CB00D69F9C /* FadeAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeAnimationController.swift; sourceTree = "<group>"; };
+		9B85F1C220B68AA4002B0499 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		F33E5EE8853A1EE3F6706787 /* Pods-TheWeather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheWeather.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheWeather/Pods-TheWeather.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -89,6 +93,8 @@
 				9B3B75C220ADCAB300993E0C /* Kernel */,
 				9B3B75C320ADCAFF00993E0C /* DetailView */,
 				9B3B75BF20ADB7FE00993E0C /* Extension.swift */,
+				9B6F488D20B449CB00D69F9C /* FadeAnimationController.swift */,
+				9B85F1C220B68AA4002B0499 /* CustomNavigationController.swift */,
 				9B064B3420AD39DF007F2832 /* Main.storyboard */,
 				9B064B3720AD39E2007F2832 /* Assets.xcassets */,
 				9B064B3920AD39E2007F2832 /* LaunchScreen.storyboard */,
@@ -263,9 +269,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B85F1C320B68AA4002B0499 /* CustomNavigationController.swift in Sources */,
 				9B3B75C520ADCB3F00993E0C /* DetailViewController.swift in Sources */,
 				9B0AA80120AD4A1D00747A0A /* Constants.swift in Sources */,
 				9B0AA7FA20AD43E800747A0A /* MainTableViewController.swift in Sources */,
+				9B6F488E20B449CB00D69F9C /* FadeAnimationController.swift in Sources */,
 				9B3B75BE20ADB54700993E0C /* WeatherTableViewCell.swift in Sources */,
 				9B0AA7FF20AD495300747A0A /* DataHelper.swift in Sources */,
 				9B064B3120AD39DF007F2832 /* AppDelegate.swift in Sources */,
@@ -348,7 +356,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -402,7 +410,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
