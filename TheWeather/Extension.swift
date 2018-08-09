@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import AlamofireImage
+import RealmSwift
 
 extension UIImageView {
     func imageFromServerURL(urlString: String) {
@@ -25,5 +26,14 @@ extension UIImageView {
 extension Double {
     func format(_ formatString: String) -> String {
         return String(format: "%\(formatString)f", self)
+    }
+}
+
+//MARK: RealmSwift
+
+extension Results {
+    func toArray<T>(ofType: T.Type) -> [T] {
+        let array = Array(self) as! [T]
+        return array
     }
 }

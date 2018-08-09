@@ -2,24 +2,38 @@ PODS:
   - Alamofire (4.7.0)
   - AlamofireImage (3.3.0):
     - Alamofire (~> 4.5)
+  - CRRefresh (1.0.7)
+  - Realm (3.7.4):
+    - Realm/Headers (= 3.7.4)
+  - Realm/Headers (3.7.4)
+  - RealmSwift (3.7.4):
+    - Realm (= 3.7.4)
   - SnapKit (4.0.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
   - AlamofireImage (~> 3.3)
+  - CRRefresh
+  - RealmSwift
   - SnapKit (~> 4.0.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - AlamofireImage
+    - CRRefresh
+    - Realm
+    - RealmSwift
     - SnapKit
 
 SPEC CHECKSUMS:
   Alamofire: 907e0a98eb68cdb7f9d1f541a563d6ac5dc77b25
   AlamofireImage: 2e784dc5d00f04903a52c1d169181469c805c3df
+  CRRefresh: 0a77b1b0d81a6a9e1ac611cb748ba3660b89601f
+  Realm: a469bb59e33f9926102ccaea4349822c53b9117e
+  RealmSwift: a45861b21c180f5cf0f122144b9759fa8dde3e9e
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
 
-PODFILE CHECKSUM: 0f2f4f4d7d4f0dab9aca247825a2e78195397ba2
+PODFILE CHECKSUM: b6036ae831f8ab7f73a20499bff522a7edd238c3
 
 COCOAPODS: 1.5.2

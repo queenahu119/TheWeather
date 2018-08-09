@@ -7,12 +7,37 @@
 //
 
 import UIKit
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+
+        openRealm()
+
+//        let realm = try! Realm()
+//        try? realm.write({
+//            realm.deleteAll()
+//        })
+
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
+
         return true
+    }
+
+    func openRealm() {
+
+        let defaultRealmPath = Realm.Configuration.defaultConfiguration.fileURL!
+        let bundleRealmPath = Bundle.main.url(forResource: "initial", withExtension: "realm")
+
+        if !FileManager.default.fileExists(atPath: defaultRealmPath.absoluteString) {
+            do {
+                try FileManager.default.copyItem(at: bundleRealmPath!, to: defaultRealmPath)
+            } catch let error {
+                print("error copying seeds: \(error)")
+            }
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

@@ -7,12 +7,26 @@
 //
 
 import Foundation
+import RealmSwift
 
 let serverURL = "https://api.openweathermap.org/data/2.5/weather"
 
 class DataHelper: NSObject {
 
-    fileprivate var weatherIcons: Dictionary<String, Any>?
+    private static var mInstance:DataHelper?
+    static func sharedInstance() -> DataHelper {
+        if mInstance == nil {
+            mInstance = DataHelper()
+
+        }
+        return mInstance!
+    }
+
+    var cities: [City]? = nil
+
+    override init() {
+
+    }
 
     func loadDataByCity(name: String, callback: @escaping (WeatherData?, NSError?) -> ()) {
 
@@ -45,5 +59,64 @@ class DataHelper: NSObject {
             }
         }
         task.resume()
+    }
+    
+    func readCityListFile(callback: @escaping ([City]?, NSError?) -> ()) {
+
+        if let url = Bundle.main.url(forResource: "cityList", withExtension: "json") {
+            do {
+                let data = try Data(contentsOf: url)
+                let decoder = JSONDecoder()
+                let jsonData = try decoder.decode([City].self, from: data)
+                print("Json data:", jsonData.count)
+
+                let realm = try! Realm()
+                for city in jsonData {
+                    do {
+                        let isFound = realm.objects(City.self).filter("name == %@", city.name).first
+                        if (isFound == nil) {
+                            try realm.write ({
+                                print("city:", city.name)
+                                realm.add(city)
+                            })
+                        }
+                    } catch let error as NSError {
+                        // handle error
+                        print("Realm Save object failed: ", error)
+                    }
+                }
+
+                let cities = realm.objects(City.self).toArray(ofType: City.self)
+                callback(cities, nil)
+            } catch let error as NSError {
+                print("Json failed. \(error)")
+                callback(nil, error)
+            }
+        }
+    }
+
+    func readCityListFile() {
+
+        if let url = Bundle.main.url(forResource: "cityList", withExtension: "json") {
+            do {
+                let data = try Data(contentsOf: url)
+                let decoder = JSONDecoder()
+                let cities = try decoder.decode([City].self, from: data)
+
+                print("Json data:", cities.count)
+
+                DispatchQueue.main.async {
+                    let realm = try! Realm()
+                    for city in cities {
+                        try! realm.write {
+                            realm.add(city)
+                        }
+                    }
+                }
+
+            } catch let error as NSError {
+                print("Json failed. \(error)")
+            }
+        }
     }
 }

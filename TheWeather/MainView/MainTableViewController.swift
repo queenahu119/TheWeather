@@ -22,6 +22,8 @@ class MainTableViewController: UITableViewController {
 
         navigationItem.title = "Current Weather"
 
+        self.setupNavBarButtons()
+
         setupLoading()
         viewModel.initFetch()
 
@@ -100,4 +102,25 @@ class MainTableViewController: UITableViewController {
         }
     }
 
+    private func setupNavBarButtons() {
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add,
+                                        target: self, action: #selector(onAddList))
+        let editButton = UIBarButtonItem(barButtonSystemItem: .edit,
+                                         target: self, action: #selector(onAddList))
+        navigationItem.rightBarButtonItem = addButton
+        navigationItem.leftBarButtonItem = editButton
+    }
+
+    // MARK: - Action
+    @objc func onAddList() {
+
+        performSegue(withIdentifier: "ToAddCityView", sender: self)
+    }
+
+    // MARK: - Segues
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ToAddCityView" {
+//            print("ToAddCityView")
+        }
+    }
 }
