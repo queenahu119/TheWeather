@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainTableViewController: UITableViewController {
+class MainTableViewController: UITableViewController, AddCityTableViewControllerDelegate {
     private let reuseIdentifier = "CellId"
 
     lazy var viewModel: MainViewModel = {
@@ -113,14 +113,19 @@ class MainTableViewController: UITableViewController {
 
     // MARK: - Action
     @objc func onAddList() {
-
         performSegue(withIdentifier: "ToAddCityView", sender: self)
     }
 
     // MARK: - Segues
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ToAddCityView" {
-//            print("ToAddCityView")
+            if let destination : AddCityTableViewController = segue.destination as? AddCityTableViewController {
+                destination.delegate = self
+            }
         }
+    }
+
+    func addNewCityCompletion(_ city: City) {
+        viewModel.addCity(id: city.id)
     }
 }

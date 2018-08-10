@@ -28,18 +28,18 @@ class DataHelper: NSObject {
 
     }
 
-    func loadDataByCity(name: String, callback: @escaping (WeatherData?, NSError?) -> ()) {
+    func loadDataByCity(id: Int, callback: @escaping (WeatherData?, NSError?) -> ()) {
 
         var components = URLComponents(string: serverURL)!
         components.queryItems = [
-            URLQueryItem(name: "id", value: name),
+            URLQueryItem(name: "id", value: String(id)),
             URLQueryItem(name: "APPID", value: WeatherClient.AppID),
             URLQueryItem(name: "units", value: "metric")
         ]
 
         components.percentEncodedQuery = components.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
         let request = URLRequest(url: components.url!)
-
+        
         let task = URLSession.shared.dataTask(with: request) { (data, response , error) in
 
             if let error = error as NSError? {

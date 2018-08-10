@@ -9,9 +9,16 @@
 import UIKit
 import CRRefresh
 
+@objc protocol AddCityTableViewControllerDelegate {
+    @objc optional func addNewCityCompletion(_ city: City)
+
+}
+
 class AddCityTableViewController: UITableViewController {
 
     private let reuseIdentifier = "CityCellId"
+
+    open weak var delegate: AddCityTableViewControllerDelegate?
 
     lazy var viewModel: AddCityViewModel = {
         return AddCityViewModel()
@@ -72,6 +79,23 @@ class AddCityTableViewController: UITableViewController {
         }
 
         return cell
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+        guard let cell: UITableViewCell = tableView.cellForRow(at: indexPath) else { return }
+        cell.accessoryType = .checkmark
+
+        tableView.deselectRow(at: indexPath, animated: true)
+
+        if let city: City = viewModel.getCellViewModel(at: indexPath) {
+            if self.delegate != nil {
+                self.delegate?.addNewCityCompletion!(city)
+                self.navigationController?.popViewController(animated: true)
+            }
+
+        }
+
     }
 
     func setupLoading() {

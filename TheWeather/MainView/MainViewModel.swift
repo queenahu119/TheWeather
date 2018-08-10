@@ -16,7 +16,7 @@ class MainViewModel: NSObject {
         self.dataHelper = dataHelper
     }
 
-    var citys = ["2147714", "7839805", "2174003"]
+    var citys = [2147714, 7839805, 2174003]
 
     var isLoading: Bool = false {
         didSet {
@@ -29,6 +29,11 @@ class MainViewModel: NSObject {
     var updateLoadingStatus: (() -> Void)?
 
     func initFetch() {
+
+        if let list = UserDefaults.standard.array(forKey: "defaultCities") as? [Int] {
+            self.citys = list
+        }
+        
         fetchData()
     }
 
@@ -63,20 +68,32 @@ class MainViewModel: NSObject {
             }
 
             for item in citys {
-                self?.dataHelper.loadDataByCity(name:item) { [weak self] (weatherData, error) in
-                    self?.isLoading = false
-
-                    guard let weatherData = weatherData else {
-                        return
-                    }
-
-                    let cell = WeatherCellViewModel(cityText: weatherData.name, temperatureText: weatherData.main?.temp)
-                    self?.cellViewModels.append(cell)
-
-                    self?.weathers.append(weatherData)
-                }
+                self?.loadCityData(id: item)
             }
         }
+    }
+
+    func loadCityData(id: Int) {
+
+        self.dataHelper.loadDataByCity(id: id) { [weak self] (weatherData, error) in
+            self?.isLoading = false
+
+            guard let weatherData = weatherData else {
+                return
+            }
+
+            let cell = WeatherCellViewModel(cityText: weatherData.name, temperatureText: weatherData.main?.temp)
+            self?.cellViewModels.append(cell)
+
+            self?.weathers.append(weatherData)
+        }
+    }
+
+    func addCity(id:Int) {
+        self.citys.append(id)
+        UserDefaults.standard.set(self.citys, forKey: "defaultCities")
+
+        self.loadCityData(id: id)
     }
 }
 

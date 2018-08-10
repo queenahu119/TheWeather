@@ -39,7 +39,7 @@ struct WeatherInfo: Decodable {
 
 struct MainInfo: Decodable {
     var temp: Double?
-    var pressure: Int?
+    var pressure: Double?
     var humidity: Int?
     var tempMin: Double?
     var tempMax: Double?
@@ -60,7 +60,7 @@ struct CloudInfo: Decodable {
 }
 
 struct VolumeInfo: Decodable {
-    var volume: Int? // for the last 3 hours
+    var volume: Double? // for the last 3 hours
 
     private enum CodingKeys: String, CodingKey {
         case volume = "3h"
