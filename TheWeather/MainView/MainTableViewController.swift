@@ -66,8 +66,9 @@ class MainTableViewController: UITableViewController, AddCityTableViewController
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
+        // DetailViewController
         let storybard = UIStoryboard(name: "Main", bundle: nil)
-        if let detailVC = storybard.instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController {
+        if let detailVC = storybard.instantiateViewController(withIdentifier: "DetailViewCollectionViewController") as? DetailViewCollectionViewController {
             detailVC.viewModel = viewModel
             detailVC.indexPath = indexPath
 
