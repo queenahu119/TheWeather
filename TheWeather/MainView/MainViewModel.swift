@@ -59,7 +59,7 @@ class MainViewModel: NSObject {
 
     // MARK: - Logic
 
-    fileprivate func fetchData() {
+    func fetchData() {
         self.isLoading = true
 
         DispatchQueue.global().async { [weak self] in

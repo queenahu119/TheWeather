@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 
+let weatherIconUrl = "https://openweathermap.org/img/w/"
 let padding = UIEdgeInsets(top: 20, left: 20, bottom: -20, right: -20)
 
 class BaseCollectionViewCell: UICollectionViewCell {
@@ -178,7 +179,5 @@ class WeatherCollectionViewCell: BaseCollectionViewCell {
             make.centerY.equalTo(self.snp.centerY)
             make.right.equalTo(self.snp.right).offset(-8)
         }
-
-//        descriptionLabel.backgroundColor = UIColor.blue
     }
 }

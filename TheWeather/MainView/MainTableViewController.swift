@@ -15,7 +15,8 @@ class MainTableViewController: UITableViewController, AddCityTableViewController
         return MainViewModel()
     }()
 
-    var activityIndicator:UIActivityIndicatorView!
+    private var activityIndicator:UIActivityIndicatorView!
+    private var timer: DispatchSourceTimer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,10 +33,16 @@ class MainTableViewController: UITableViewController, AddCityTableViewController
                 self?.tableView.reloadData()
             }
         }
+
+        startUpdateWeatherTimer()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+
+    deinit {
+        self.stopUpdateWeatherTimer()
     }
 
     // MARK: - Table view data source
@@ -110,6 +117,21 @@ class MainTableViewController: UITableViewController, AddCityTableViewController
                                          target: self, action: #selector(onAddList))
         navigationItem.rightBarButtonItem = addButton
         navigationItem.leftBarButtonItem = editButton
+    }
+
+    func startUpdateWeatherTimer() {
+        let queue = DispatchQueue(label: "update.current.weather")
+        timer = DispatchSource.makeTimerSource(queue: queue)
+        timer!.schedule(deadline: .now(), repeating: .seconds(60))
+        timer!.setEventHandler { [weak self] in
+            self?.viewModel.fetchData()
+        }
+        timer!.resume()
+    }
+
+    func stopUpdateWeatherTimer() {
+        timer?.cancel()
+        timer = nil
     }
 
     // MARK: - Action
