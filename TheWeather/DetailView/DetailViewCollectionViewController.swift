@@ -24,6 +24,11 @@ class DetailViewCollectionViewController: UICollectionViewController, UICollecti
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Adjust UI for the iphoneX's safe area
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.sectionInsetReference = .fromSafeArea
+        collectionView?.collectionViewLayout = flowLayout
+        
         if let viewModel = viewModel {
             if let indexPath = indexPath,
                 let data = viewModel.getAllWeatherInfo(at: indexPath) {
