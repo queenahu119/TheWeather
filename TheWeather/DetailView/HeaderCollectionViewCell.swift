@@ -101,9 +101,9 @@ class DetailCollectionViewCell: BaseCollectionViewCell {
 
     override func setupUI() {
         maxMinTempLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(self.snp.left).offset(padding.left)
-            make.right.equalTo(self.snp.right).offset(padding.right)
-            make.top.equalTo(self.snp.top).offset(padding.top)
+            make.left.equalTo(self.safeAreaLayoutGuide.snp.left).offset(padding.left)
+            make.right.equalTo(self.safeAreaLayoutGuide.snp.right).offset(padding.right)
+            make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(padding.top)
             make.height.equalTo(30)
         }
 
@@ -169,8 +169,8 @@ class WeatherCollectionViewCell: BaseCollectionViewCell {
         descriptionLabel.font = UIFont.systemFont(ofSize: 14)
 
         weatherIcon.snp.makeConstraints { (make) in
-            make.left.equalTo(self.snp.left).offset(padding.left)
-            make.centerY.equalTo(self.snp.centerY)
+            make.left.equalTo(self.safeAreaLayoutGuide.snp.left).offset(padding.left)
+            make.centerY.equalTo(self.safeAreaLayoutGuide.snp.centerY)
             make.size.equalTo(imageSize)
         }
 

@@ -79,6 +79,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		888B59C6214749FF007C08A6 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				9B0AA80020AD4A1D00747A0A /* Constants.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
 		9B064B2420AD39DF007F2832 = {
 			isa = PBXGroup;
 			children = (
@@ -106,6 +114,7 @@
 				9B3B75C320ADCAFF00993E0C /* DetailView */,
 				9B3B75BF20ADB7FE00993E0C /* Extension.swift */,
 				9B6F488D20B449CB00D69F9C /* FadeAnimationController.swift */,
+				888B59C6214749FF007C08A6 /* Constants */,
 				9B85F1C220B68AA4002B0499 /* CustomNavigationController.swift */,
 				9B008213211C1F9D005761F1 /* initial.realm */,
 				9B7A540821198583006DDF76 /* AddCityTableViewController.swift */,
@@ -134,7 +143,6 @@
 			children = (
 				9B0AA7FE20AD495300747A0A /* DataHelper.swift */,
 				9B0AA80220AD4E3800747A0A /* WeatherData.swift */,
-				9B0AA80020AD4A1D00747A0A /* Constants.swift */,
 				9B090ACE2114336F00A3D508 /* City.swift */,
 			);
 			path = Kernel;

@@ -16,7 +16,7 @@ class MainViewModel: NSObject {
         self.dataHelper = dataHelper
     }
 
-    var citys = [2147714, 7839805, 2174003]
+    var citys: [Int] = []
 
     var isLoading: Bool = false {
         didSet {
@@ -32,8 +32,11 @@ class MainViewModel: NSObject {
 
         if let list = UserDefaults.standard.array(forKey: "defaultCities") as? [Int] {
             self.citys = list
+        } else {
+            self.citys = [2147714, 7839805, 2174003]
+            UserDefaults.standard.set(self.citys, forKey: "defaultCities")
         }
-        
+
         fetchData()
     }
 
@@ -60,12 +63,16 @@ class MainViewModel: NSObject {
     // MARK: - Logic
 
     func fetchData() {
-        self.isLoading = true
-
-        DispatchQueue.global().async { [weak self] in
+        
+        DispatchQueue.global().async { [weak self] () in
+            self?.isLoading = true
             guard let citys = self?.citys else {
                 return
             }
+
+            // Reset
+            self?.cellViewModels.removeAll()
+            self?.weathers.removeAll()
 
             for item in citys {
                 self?.loadCityData(id: item)
@@ -74,17 +81,14 @@ class MainViewModel: NSObject {
     }
 
     func loadCityData(id: Int) {
-
         self.dataHelper.loadDataByCity(id: id) { [weak self] (weatherData, error) in
             self?.isLoading = false
-
             guard let weatherData = weatherData else {
                 return
             }
-
+            
             let cell = WeatherCellViewModel(cityText: weatherData.name, temperatureText: weatherData.main?.temp)
             self?.cellViewModels.append(cell)
-
             self?.weathers.append(weatherData)
         }
     }

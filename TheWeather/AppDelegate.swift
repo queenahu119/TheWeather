@@ -29,13 +29,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func openRealm() {
 
         let defaultRealmPath = Realm.Configuration.defaultConfiguration.fileURL!
-        let bundleRealmPath = Bundle.main.url(forResource: "initial", withExtension: "realm")
+        let initialURL = Bundle.main.url(forResource: "initial", withExtension: "realm")
 
         if !FileManager.default.fileExists(atPath: defaultRealmPath.absoluteString) {
             do {
-                try FileManager.default.copyItem(at: bundleRealmPath!, to: defaultRealmPath)
-            } catch let error {
-                print("error copying seeds: \(error)")
+                try FileManager.default.copyItem(at: initialURL!, to: defaultRealmPath)
+            } catch {
+
             }
         }
     }

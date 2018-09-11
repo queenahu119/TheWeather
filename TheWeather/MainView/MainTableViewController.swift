@@ -120,9 +120,10 @@ class MainTableViewController: UITableViewController, AddCityTableViewController
     }
 
     func startUpdateWeatherTimer() {
+        let timeInterval: TimeInterval = 60
         let queue = DispatchQueue(label: "update.current.weather")
         timer = DispatchSource.makeTimerSource(queue: queue)
-        timer!.schedule(deadline: .now(), repeating: .seconds(60))
+        timer!.schedule(deadline: .now()+timeInterval, repeating: timeInterval)
         timer!.setEventHandler { [weak self] in
             self?.viewModel.fetchData()
         }
