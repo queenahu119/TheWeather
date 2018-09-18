@@ -62,59 +62,35 @@ class DataHelper: NSObject {
     }
     
     func readJSONFile(callback: @escaping ([City]?, NSError?) -> ()) {
+        
         if let url = Bundle.main.url(forResource: "cityList", withExtension: "json") {
+            guard let stream = InputStream(fileAtPath: url.path) else {
+                fatalError("Could not create stream for url")
+            }
+
+            stream.open()
+            defer { stream.close() }
+            
+            let decoder = JSONDecoder()
             do {
-                let data = try Data(contentsOf: url)
-                let stream: InputStream = InputStream(data: data)
-                stream.open()
+                // Read the JSON from our stream
+                let json = try JSONSerialization.jsonObject(with: stream, options: [])
+                let data = try JSONSerialization.data(withJSONObject: json, options: [])
+                let cities = try decoder.decode([City].self, from: data)
                 
-                // We'll be retrieving data from our stream in the form of a buffer,
-                // appending that chunk of data it to this variable, and continuing this
-                // process until all the data has been read
-                var dataFromStream = Data()
-                let bufferSize = 1024 // maximum size for our buffer at any given time
-                let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: bufferSize)
-                while stream.hasBytesAvailable {
-                    let outcome = stream.read(buffer, maxLength: bufferSize)
-                    if outcome == 0 { // stream has reached its end
-                        break
-                    } else if outcome == -1 { // error occurred
-                        fatalError("error occurred while reading stream")
-                    } else if outcome > 0 { // positive outcome represents # of bytes read
-                        dataFromStream.append(buffer, count: outcome)
-                    } else {
-                        fatalError("this should never occur")
-                    }
-                }
-                
-                // We're done using our buffer, deallocate it
-                buffer.deallocate()
-                // We read all our data from the stream, let's close it
-                stream.close()
-                
-                // Now that we've extracted our JSON data from the stream, let's
-                // decode it into an array of Posts
-                let decoder = JSONDecoder()
-                do {
-                    let cities = try decoder.decode([City].self, from: dataFromStream)
+                let dispatchQueue = DispatchQueue(label: "BackgroundRealm", qos: .background)
+                dispatchQueue.async {
+                    let myBackgroundRealm = try! Realm()
                     
-                    let dispatchQueue = DispatchQueue(label: "BackgroundRealm", qos: .background)
-                    dispatchQueue.async {
-                        let myBackgroundRealm = try! Realm()
-                        
-                        for city in cities {
-                            try! myBackgroundRealm.write {
-                                myBackgroundRealm.create(City.self, value: city, update: false)
-                            }
+                    for city in cities {
+                        try! myBackgroundRealm.write {
+                            myBackgroundRealm.create(City.self, value: city, update: false)
                         }
                     }
-       
-                    callback(cities, nil)
-                } catch {
-                    fatalError(error.localizedDescription)
                 }
+                callback(cities, nil)
             } catch let error as NSError {
-                print("Json failed. \(error)")
+                fatalError(error.localizedDescription)
             }
         }
     }
