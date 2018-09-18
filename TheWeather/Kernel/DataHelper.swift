@@ -61,59 +61,58 @@ class DataHelper: NSObject {
         task.resume()
     }
     
-    func readCityListFile(callback: @escaping ([City]?, NSError?) -> ()) {
-
+    func readJSONFile(callback: @escaping ([City]?, NSError?) -> ()) {
         if let url = Bundle.main.url(forResource: "cityList", withExtension: "json") {
             do {
                 let data = try Data(contentsOf: url)
-                let decoder = JSONDecoder()
-                let jsonData = try decoder.decode([City].self, from: data)
-                print("Json data:", jsonData.count)
-
-                let realm = try! Realm()
-                for city in jsonData {
-                    do {
-                        let isFound = realm.objects(City.self).filter("name == %@", city.name).first
-                        if (isFound == nil) {
-                            try realm.write ({
-                                print("city:", city.name)
-                                realm.add(city)
-                            })
-                        }
-                    } catch let error as NSError {
-                        // handle error
-                        print("Realm Save object failed: ", error)
+                let stream: InputStream = InputStream(data: data)
+                stream.open()
+                
+                // We'll be retrieving data from our stream in the form of a buffer,
+                // appending that chunk of data it to this variable, and continuing this
+                // process until all the data has been read
+                var dataFromStream = Data()
+                let bufferSize = 1024 // maximum size for our buffer at any given time
+                let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: bufferSize)
+                while stream.hasBytesAvailable {
+                    let outcome = stream.read(buffer, maxLength: bufferSize)
+                    if outcome == 0 { // stream has reached its end
+                        break
+                    } else if outcome == -1 { // error occurred
+                        fatalError("error occurred while reading stream")
+                    } else if outcome > 0 { // positive outcome represents # of bytes read
+                        dataFromStream.append(buffer, count: outcome)
+                    } else {
+                        fatalError("this should never occur")
                     }
                 }
-
-                let cities = realm.objects(City.self).toArray(ofType: City.self)
-                callback(cities, nil)
-            } catch let error as NSError {
-                print("Json failed. \(error)")
-                callback(nil, error)
-            }
-        }
-    }
-
-    func readCityListFile() {
-
-        if let url = Bundle.main.url(forResource: "cityList", withExtension: "json") {
-            do {
-                let data = try Data(contentsOf: url)
+                
+                // We're done using our buffer, deallocate it
+                buffer.deallocate()
+                // We read all our data from the stream, let's close it
+                stream.close()
+                
+                // Now that we've extracted our JSON data from the stream, let's
+                // decode it into an array of Posts
                 let decoder = JSONDecoder()
-                let cities = try decoder.decode([City].self, from: data)
-
-                print("Json data:", cities.count)
-
-                DispatchQueue.main.async {
-                    let realm = try! Realm()
-                    for city in cities {
-                        try! realm.write {
-                            realm.add(city)
+                do {
+                    let cities = try decoder.decode([City].self, from: dataFromStream)
+                    
+                    let dispatchQueue = DispatchQueue(label: "BackgroundRealm", qos: .background)
+                    dispatchQueue.async {
+                        let myBackgroundRealm = try! Realm()
+                        
+                        for city in cities {
+                            try! myBackgroundRealm.write {
+                                myBackgroundRealm.create(City.self, value: city, update: false)
+                            }
                         }
                     }
+       
+                    callback(cities, nil)
+                } catch {
+                    fatalError(error.localizedDescription)
                 }
-
             } catch let error as NSError {
                 print("Json failed. \(error)")
             }

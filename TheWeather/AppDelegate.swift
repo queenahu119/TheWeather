@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-        openRealm()
+        realmMigration()
 
 //        let realm = try! Realm()
 //        try? realm.write({
@@ -26,20 +26,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func openRealm() {
-
-        let defaultRealmPath = Realm.Configuration.defaultConfiguration.fileURL!
-        let initialURL = Bundle.main.url(forResource: "initial", withExtension: "realm")
-
-        if !FileManager.default.fileExists(atPath: defaultRealmPath.absoluteString) {
-            do {
-                try FileManager.default.copyItem(at: initialURL!, to: defaultRealmPath)
-            } catch {
-
-            }
+    func realmMigration() {
+        let config = Realm.Configuration(
+            schemaVersion : 1,
+            migrationBlock : { migration , oldSchemaVersion in
+                if (oldSchemaVersion < 1) {
+                    print("realmMigration: ")
+                    migration.enumerateObjects(ofType: City.className(), { (oldObject, newObject) in
+                        newObject!["coord"] = nil
+                    })
+                }
         }
+        )
+        Realm.Configuration.defaultConfiguration = config
     }
-
+    
     func applicationWillResignActive(_ application: UIApplication) {
     }
 

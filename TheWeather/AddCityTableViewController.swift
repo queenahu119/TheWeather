@@ -74,10 +74,19 @@ class AddCityTableViewController: UITableViewController {
             fatalError("Dequeueing WeatherTableViewCell failed")
         }
 
-        if let data: City? = viewModel.getCellViewModel(at: indexPath) {
-            cell.textLabel?.text = data?.name
+        if let data: City = viewModel.getCellViewModel(at: indexPath) {
+            var text = data.name
+            if let county = data.country {
+                text = text + ", \(county)"
+            }
+            if let coord = data.coord {
+                let lon = Int(coord.lon)
+                let lat = Int(coord.lat)
+                text = text + " (\(lon),\(lat))"
+            }
+            
+            cell.textLabel?.text = "\(text)"
         }
-
         return cell
     }
 

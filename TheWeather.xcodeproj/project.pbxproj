@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		9B00820A211BFAFC005761F1 /* DetailViewCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B008209211BFAFC005761F1 /* DetailViewCollectionViewController.swift */; };
-		9B008214211C1FA5005761F1 /* initial.realm in Resources */ = {isa = PBXBuildFile; fileRef = 9B008213211C1F9D005761F1 /* initial.realm */; };
 		9B064B3120AD39DF007F2832 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B064B3020AD39DF007F2832 /* AppDelegate.swift */; };
 		9B064B3620AD39DF007F2832 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B064B3420AD39DF007F2832 /* Main.storyboard */; };
 		9B064B3820AD39E2007F2832 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B064B3720AD39E2007F2832 /* Assets.xcassets */; };
@@ -34,7 +33,6 @@
 		34C466E8AC2B608EDDD87100 /* Pods-TheWeather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheWeather.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TheWeather/Pods-TheWeather.debug.xcconfig"; sourceTree = "<group>"; };
 		37F0350E274167AD5E0FAC6F /* Pods_TheWeather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TheWeather.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B008209211BFAFC005761F1 /* DetailViewCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewCollectionViewController.swift; sourceTree = "<group>"; };
-		9B008213211C1F9D005761F1 /* initial.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = initial.realm; sourceTree = "<group>"; };
 		9B064B2D20AD39DF007F2832 /* TheWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B064B3020AD39DF007F2832 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9B064B3520AD39DF007F2832 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -116,7 +114,6 @@
 				9B6F488D20B449CB00D69F9C /* FadeAnimationController.swift */,
 				888B59C6214749FF007C08A6 /* Constants */,
 				9B85F1C220B68AA4002B0499 /* CustomNavigationController.swift */,
-				9B008213211C1F9D005761F1 /* initial.realm */,
 				9B7A540821198583006DDF76 /* AddCityTableViewController.swift */,
 				9B5154032117DF4F00D2F3BC /* AddCityViewModel.swift */,
 				9B5154012117DCFD00D2F3BC /* cityList.json */,
@@ -226,7 +223,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9B008214211C1FA5005761F1 /* initial.realm in Resources */,
 				9B064B3B20AD39E2007F2832 /* LaunchScreen.storyboard in Resources */,
 				9B064B3820AD39E2007F2832 /* Assets.xcassets in Resources */,
 				9B5154022117DCFD00D2F3BC /* cityList.json in Resources */,

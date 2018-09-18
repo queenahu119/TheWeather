@@ -66,21 +66,20 @@ class AddCityViewModel: NSObject {
     // MARK: - Logic
 
     fileprivate func fetchData() {
-
         let realm = try! Realm()
         let cities = realm.objects(City.self)
+
         if cities.isEmpty {
             self.isLoading = true
             DispatchQueue.global().async { [weak self] in
-                self?.dataHelper.readCityListFile(callback: { (cities, error) in
+                print("Read data from JSON file.")
+                self?.dataHelper.readJSONFile(callback: { (cities, error) in
                     guard let cities = cities else {
-                        print("read json file is NULL.")
                         return
                     }
-
+                    
                     DispatchQueue.main.async {
                         self?.isLoading = false
-                        print("Add data into Realm.", cities[0].name)
                         self?.cities = cities
                         self?.cellViewModels = Array(cities[0..<limitNumber])
                     }
