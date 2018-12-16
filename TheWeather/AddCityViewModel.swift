@@ -73,11 +73,11 @@ class AddCityViewModel: NSObject {
             self.isLoading = true
             DispatchQueue.global().async { [weak self] in
                 print("Read data from JSON file.")
-                self?.dataHelper.readJSONFile(callback: { (cities, error) in
+                self?.dataHelper.readJSONFile(callback: { (cities, _) in
                     guard let cities = cities else {
                         return
                     }
-                    
+
                     DispatchQueue.main.async {
                         self?.isLoading = false
                         self?.cities = cities
@@ -102,7 +102,7 @@ class AddCityViewModel: NSObject {
     }
     func updateSearchResults(text: String?) {
         if let text = text {
-            self.filteredCities = self.cities.filter{(city : City) -> Bool in
+            self.filteredCities = self.cities.filter {(city : City) -> Bool in
                 return city.name.lowercased().contains(text.lowercased())
                 }
 

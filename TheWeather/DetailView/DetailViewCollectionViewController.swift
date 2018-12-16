@@ -20,7 +20,7 @@ class DetailViewCollectionViewController: UICollectionViewController, UICollecti
     var indexPath: IndexPath?
     var viewModel: MainViewModel?
     fileprivate var detailWeather: WeatherData?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -28,7 +28,7 @@ class DetailViewCollectionViewController: UICollectionViewController, UICollecti
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.sectionInsetReference = .fromSafeArea
         collectionView?.collectionViewLayout = flowLayout
-        
+
         if let viewModel = viewModel {
             if let indexPath = indexPath,
                 let data = viewModel.getAllWeatherInfo(at: indexPath) {

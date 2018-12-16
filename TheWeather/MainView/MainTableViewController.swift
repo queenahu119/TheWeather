@@ -85,8 +85,8 @@ class MainTableViewController: UITableViewController, AddCityTableViewController
     }
 
     func setupLoading() {
-        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle:
-            UIActivityIndicatorViewStyle.gray)
+        activityIndicator = UIActivityIndicatorView(style:
+            UIActivityIndicatorView.Style.gray)
         activityIndicator.center = self.view.center
         self.view.addSubview(activityIndicator)
 

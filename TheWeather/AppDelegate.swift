@@ -12,7 +12,7 @@ import RealmSwift
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         realmMigration()
 
@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             migrationBlock : { migration , oldSchemaVersion in
                 if (oldSchemaVersion < 1) {
                     print("realmMigration: ")
-                    migration.enumerateObjects(ofType: City.className(), { (oldObject, newObject) in
+                    migration.enumerateObjects(ofType: City.className(), { (_, newObject) in
                         newObject!["coord"] = nil
                     })
                 }
@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
         Realm.Configuration.defaultConfiguration = config
     }
-    
+
     func applicationWillResignActive(_ application: UIApplication) {
     }
 

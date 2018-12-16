@@ -13,9 +13,9 @@ class City : Object, Decodable {
 
     @objc dynamic var id:Int = 0
     @objc dynamic var name:String = ""
-    @objc dynamic var country: String? = nil
+    @objc dynamic var country: String?
     @objc dynamic var coord: Coord?
-    
+
     override static func primaryKey() -> String {
         return "id"
     }

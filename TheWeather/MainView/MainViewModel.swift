@@ -63,7 +63,7 @@ class MainViewModel: NSObject {
     // MARK: - Logic
 
     func fetchData() {
-        
+
         DispatchQueue.global().async { [weak self] () in
             self?.isLoading = true
             guard let citys = self?.citys else {
@@ -81,12 +81,12 @@ class MainViewModel: NSObject {
     }
 
     func loadCityData(id: Int) {
-        self.dataHelper.loadDataByCity(id: id) { [weak self] (weatherData, error) in
+        self.dataHelper.loadDataByCity(id: id) { [weak self] (weatherData, _) in
             self?.isLoading = false
             guard let weatherData = weatherData else {
                 return
             }
-            
+
             let cell = WeatherCellViewModel(cityText: weatherData.name, temperatureText: weatherData.main?.temp)
             self?.cellViewModels.append(cell)
             self?.weathers.append(weatherData)

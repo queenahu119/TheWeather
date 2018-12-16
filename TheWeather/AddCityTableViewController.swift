@@ -77,14 +77,14 @@ class AddCityTableViewController: UITableViewController {
         if let data: City = viewModel.getCellViewModel(at: indexPath) {
             var text = data.name
             if let county = data.country {
-                text = text + ", \(county)"
+                text += ", \(county)"
             }
             if let coord = data.coord {
                 let lon = Int(coord.lon)
                 let lat = Int(coord.lat)
-                text = text + " (\(lon),\(lat))"
+                text += " (\(lon),\(lat))"
             }
-            
+
             cell.textLabel?.text = "\(text)"
         }
         return cell
@@ -108,8 +108,8 @@ class AddCityTableViewController: UITableViewController {
     }
 
     func setupLoading() {
-        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle:
-            UIActivityIndicatorViewStyle.gray)
+        activityIndicator = UIActivityIndicatorView(style:
+            UIActivityIndicatorView.Style.gray)
         activityIndicator.center = self.view.center
         self.view.addSubview(activityIndicator)
 

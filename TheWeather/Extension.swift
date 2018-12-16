@@ -29,7 +29,7 @@ extension Double {
     }
 }
 
-//MARK: RealmSwift
+// MARK: RealmSwift
 
 extension Results {
     func toArray<T>(ofType: T.Type) -> [T] {

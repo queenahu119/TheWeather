@@ -22,13 +22,13 @@ class DataHelper: NSObject {
         return mInstance!
     }
 
-    var cities: [City]? = nil
+    var cities: [City]?
 
     override init() {
 
     }
 
-    func loadDataByCity(id: Int, callback: @escaping (WeatherData?, NSError?) -> ()) {
+    func loadDataByCity(id: Int, callback: @escaping (WeatherData?, NSError?) -> Void) {
 
         var components = URLComponents(string: serverURL)!
         components.queryItems = [
@@ -39,8 +39,8 @@ class DataHelper: NSObject {
 
         components.percentEncodedQuery = components.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
         let request = URLRequest(url: components.url!)
-        
-        let task = URLSession.shared.dataTask(with: request) { (data, response , error) in
+
+        let task = URLSession.shared.dataTask(with: request) { (data, _ , error) in
 
             if let error = error as NSError? {
                 callback(nil, error)
@@ -60,9 +60,9 @@ class DataHelper: NSObject {
         }
         task.resume()
     }
-    
-    func readJSONFile(callback: @escaping ([City]?, NSError?) -> ()) {
-        
+
+    func readJSONFile(callback: @escaping ([City]?, NSError?) -> Void) {
+
         if let url = Bundle.main.url(forResource: "cityList", withExtension: "json") {
             guard let stream = InputStream(fileAtPath: url.path) else {
                 fatalError("Could not create stream for url")
@@ -70,18 +70,18 @@ class DataHelper: NSObject {
 
             stream.open()
             defer { stream.close() }
-            
+
             let decoder = JSONDecoder()
             do {
                 // Read the JSON from our stream
                 let json = try JSONSerialization.jsonObject(with: stream, options: [])
                 let data = try JSONSerialization.data(withJSONObject: json, options: [])
                 let cities = try decoder.decode([City].self, from: data)
-                
+
                 let dispatchQueue = DispatchQueue(label: "BackgroundRealm", qos: .background)
                 dispatchQueue.async {
                     let myBackgroundRealm = try! Realm()
-                    
+
                     for city in cities {
                         try! myBackgroundRealm.write {
                             myBackgroundRealm.create(City.self, value: city, update: false)
