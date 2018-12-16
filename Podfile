@@ -6,9 +6,9 @@ target 'TheWeather' do
   use_frameworks!
 
   # Pods for TheWeather
-  pod 'SnapKit', '~> 4.0.0'
-  pod 'Alamofire', '~> 4.7'
-  pod 'AlamofireImage', '~> 3.3'
+  pod 'SnapKit', '~> 4.2.0'
+  pod 'Alamofire', '~> 4.8'
+  pod 'AlamofireImage', '~> 3.5'
   pod 'RealmSwift'
   pod 'CRRefresh'
 end
